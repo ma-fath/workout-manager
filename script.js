@@ -1,5 +1,6 @@
 "use strict";
 
+// APPLICATION ARCHITECTURE
 const form = document.querySelector(".form");
 const containerWorkouts = document.querySelector(".workouts");
 const inputType = document.querySelector(".form__input--type");
@@ -8,7 +9,6 @@ const inputDuration = document.querySelector(".form__input--duration");
 const inputCadence = document.querySelector(".form__input--cadence");
 const inputElevation = document.querySelector(".form__input--elevation");
 
-// APPLICATION ARCHITECTURE
 class App {
     // Private instance properties
     #map;
@@ -19,6 +19,9 @@ class App {
     // Method 1 - Constructor
     constructor() {
         this._getPosition();
+
+        this._getLocalStorage();
+
         // An event handler function will always have the "this" keyword of the DOM element onto which it is attached.
         // So below, "this" points to the form not the app object!
         // So to fix this, must use bind method.
@@ -50,6 +53,8 @@ class App {
 
         // Handling clicks on map
         this.#map.on("click", this._showForm.bind(this));
+
+        this.#workouts.forEach(work => this._renderWorkoutMarker(work));
     }
 
     // Method 4
@@ -110,7 +115,6 @@ class App {
 
         // Add new object to workout array
         this.#workouts.push(workout);
-        console.log(workout);
 
         // Render workout on map as marker
         this._renderWorkoutMarker(workout);
@@ -120,11 +124,15 @@ class App {
 
         // Hide form + Clear input fields
         this._hideForm();
+
+        // Set local storage
+        this._setLocalStorage();
     }
 
     // Method 8
     _renderWorkoutMarker(workout) {
-        L.marker(workout.coords).addTo(this.#map)
+        L.marker(workout.coords)
+            .addTo(this.#map)
             .bindPopup(L.popup({
                 maxWidth: 250,
                 minWidth: 100,
@@ -186,13 +194,14 @@ class App {
 
     // Method 10
     _moveToPopup(e) {
+        // To prevent error when clicking on workout after a refresh
+        if (!this.#map) return;
+
         const workoutEl = e.target.closest(".workout");
-        console.log(workoutEl);
 
         if (!workoutEl) return;
 
         const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
-        console.log(workout);
 
         this.#map.setView(workout.coords, this.#mapZoomLevel, {
             animate: true,
@@ -202,12 +211,37 @@ class App {
         });
 
         // Testing out the public interface in workout.js
-        workout.click();
+        // Will give error when using it on an object created from a localstorage string
+        // workout.click();
+    }
+
+    // Method 11
+    _setLocalStorage() {
+        localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+    }
+
+    // Method 12
+    _getLocalStorage() {
+        const data = JSON.parse(localStorage.getItem("workouts"));
+
+        if (!data) return;
+
+        this.#workouts = data;
+
+        this.#workouts.forEach(work => {
+            this._renderWorkout(work);
+        });
+    }
+
+    // Method 13
+    reset() {
+        localStorage.removeItem("workouts");
+        location.reload();
     }
 }
 
 const app = new App();
 
-const run1 = new Running([39, -12], 5.2, 24, 178);
-const cyc1 = new Cycling([39, -12], 27, 95, 523);
-console.log(run1, cyc1);
+// const run1 = new Running([39, -12], 5.2, 24, 178);
+// const cyc1 = new Cycling([39, -12], 27, 95, 523);
+// console.log(run1, cyc1);
