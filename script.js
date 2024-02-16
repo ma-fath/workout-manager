@@ -12,6 +12,7 @@ const inputElevation = document.querySelector(".form__input--elevation");
 class App {
     // Private instance properties
     #map;
+    #mapZoomLevel = 13;
     #mapEvent;
     #workouts = []; // Array containing all workout objects
 
@@ -23,6 +24,7 @@ class App {
         // So to fix this, must use bind method.
         form.addEventListener("submit", this._newWorkout.bind(this));
         inputType.addEventListener("change", this._toggleElevationField.bind(this));
+        containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
     }
 
     // Method 2
@@ -40,7 +42,7 @@ class App {
         const {longitude} = position.coords;
         const coords = [latitude, longitude];
         // "this" is undefined below if bind method not used when calling _loadMap()
-        this.#map = L.map("map").setView(coords, 13);
+        this.#map = L.map("map").setView(coords, this.#mapZoomLevel);
 
         L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
             attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
@@ -180,6 +182,27 @@ class App {
               `;
 
         form.insertAdjacentHTML("afterend", html);
+    }
+
+    // Method 10
+    _moveToPopup(e) {
+        const workoutEl = e.target.closest(".workout");
+        console.log(workoutEl);
+
+        if (!workoutEl) return;
+
+        const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
+        console.log(workout);
+
+        this.#map.setView(workout.coords, this.#mapZoomLevel, {
+            animate: true,
+            pan: {
+                duration: 1,
+            },
+        });
+
+        // Testing out the public interface in workout.js
+        workout.click();
     }
 }
 
