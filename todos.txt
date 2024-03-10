@@ -1,5 +1,10 @@
-1. Edit a workout
-2. Delete a workout
+1. Delete a workout (DONE)
+2. Edit a workout
+    - show form
+    - have predefined values stored in input (type, distance, duration, performance) (including coordinates?)
+    - Update #workouts
+    - Update localStorage
+    - have workout updated with new values
 
 3. Delete all workouts
 4. Sort all workouts

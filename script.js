@@ -20,7 +20,6 @@ class App {
     // Method 1 - Constructor
     constructor() {
         this._getPosition();
-
         this._getLocalStorage();
 
         // An event handler function will always have the "this" keyword of the DOM element onto which it is attached.
@@ -62,10 +61,28 @@ class App {
     }
 
     // Method 4
-    _showForm(mapE) {
+    _showForm(mapE, type = "running", distance = "", duration = "", performance = "") {
         this.#mapEvent = mapE;
         form.classList.remove("hidden");
         inputDistance.focus();
+
+        // Run the following if trying to edit a previously created workout
+        if (distance !== "") {
+            inputType.value = type;
+            inputDistance.value = distance;
+            inputDuration.value = duration;
+            if (type === "running") {
+                inputCadence.closest(".form__row").classList.remove("form__row--hidden");
+                inputElevation.closest(".form__row").classList.add("form__row--hidden");
+                inputCadence.value = performance;
+            }
+            if (type === "cycling") { // PROBLEM IF CHANGE FROM CYCLING TO RUNNING AND VICE VERSA??
+                inputCadence.closest(".form__row").classList.add("form__row--hidden");
+                inputElevation.closest(".form__row").classList.remove("form__row--hidden");
+                inputElevation.value = performance;
+            }
+            // const {lat, lng} = this.#mapEvent.latlng;
+        }
     }
 
     // Method 5
@@ -155,7 +172,7 @@ class App {
             <li class="workout workout--${workout.type}" data-id=${workout.id}>
               <h2 class="workout__title">${workout.description}</h2>
               <div class="workout__buttons">
-                <button> ⚙️ </button>
+                <button class="workout__edit"> ⚙️ </button>
                 <button class="workout__close"> ❌ </button>
               </div>
               <div class="workout__details">
@@ -199,12 +216,35 @@ class App {
               `;
 
         form.insertAdjacentHTML("afterend", html);
+
         const closeButton = document.querySelector(".workout__close");
+        const editButton = document.querySelector(".workout__edit");
         closeButton.addEventListener("click", this._deleteWorkout.bind(this));
+        editButton.addEventListener("click", this._editWorkout.bind(this));
     }
 
     // Method 10
+    _editWorkout(e) {
+        // To prevent error when clicking on workout after a refresh
+        if (!this.#map) return;
+        
+        const workoutEl = e.target.closest(".workout");
+        const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
+        const performance = workout?.cadence ?? workout.elevationGain;
+        const mapE = {"latlng": {"lat": workout.coords[0], "lng": workout.coords[1]}};
+
+        // Add updated workout
+        this._showForm(mapE, workout.type, workout.distance, workout.duration, performance);
+
+        // Remove old workout
+        this._deleteWorkout(e);
+    }
+
+    // Method 11
     _deleteWorkout(e) {
+        // To prevent error when clicking on workout after a refresh
+        if (!this.#map) return;
+
         // Remove workout from list
         const workoutEl = e.target.closest(".workout");
         containerWorkouts.removeChild(workoutEl);
@@ -224,7 +264,7 @@ class App {
         this._setLocalStorage();
     }
 
-    // Method 11
+    // Method 12
     _moveToPopup(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -250,12 +290,12 @@ class App {
         // workout.click();
     }
 
-    // Method 12
+    // Method 13
     _setLocalStorage() {
         localStorage.setItem("workouts", JSON.stringify(this.#workouts));
     }
 
-    // Method 13
+    // Method 14
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem("workouts"));
 
@@ -268,7 +308,7 @@ class App {
         });
     }
 
-    // Method 14
+    // Method 15
     reset() {
         localStorage.removeItem("workouts");
         location.reload();

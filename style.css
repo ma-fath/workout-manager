@@ -115,16 +115,22 @@ a:visited {
     display: flex;
     gap: 0.5rem;
     /*justify-content: space-between;*/
-    position: absolute; /* Allows positioning within the parent */
-    top: 0.5rem; /* Center vertically */
-    right: 0.5rem; /* Center horizontally */
-    /*transform: translate(50%, -50%); !* Adjust for the div's own dimensions *!*/
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    /*transform: translate(50%, -50%);*/
 }
 
 .workout__buttons button {
     background-color: transparent;
     border: none;
     padding: 0;
+    cursor: pointer;
+}
+
+.workout__buttons button:hover {
+    transform: scale(1.5);
+    transition: transform 0.3s ease-in-out;
 }
 
 .form {
