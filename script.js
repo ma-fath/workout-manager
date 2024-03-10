@@ -14,6 +14,7 @@ class App {
     #map;
     #mapZoomLevel = 13;
     #mapEvent;
+    #layerGroup;
     #workouts = []; // Array containing all workout objects
 
     // Method 1 - Constructor
@@ -46,6 +47,9 @@ class App {
         const coords = [latitude, longitude];
         // "this" is undefined below if bind method not used when calling _loadMap()
         this.#map = L.map("map").setView(coords, this.#mapZoomLevel);
+        this.#layerGroup = L.layerGroup();
+
+        this.#layerGroup.addTo(this.#map);
 
         L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
             attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
@@ -131,8 +135,8 @@ class App {
 
     // Method 8
     _renderWorkoutMarker(workout) {
-        L.marker(workout.coords)
-            .addTo(this.#map)
+        const markerObject = L.marker(workout.coords)
+            .addTo(this.#layerGroup) // removed previous .addTo(this.#map) because unnecessary
             .bindPopup(L.popup({
                 maxWidth: 250,
                 minWidth: 100,
@@ -142,6 +146,7 @@ class App {
             }))
             .setPopupContent(`${workout.type === "running" ? "🏃‍" : "🚴"} ${workout.description}`)
             .openPopup();
+        workout.markerID = markerObject._leaflet_id;
     }
 
     // Method 9
@@ -149,6 +154,10 @@ class App {
         let html = `
             <li class="workout workout--${workout.type}" data-id=${workout.id}>
               <h2 class="workout__title">${workout.description}</h2>
+              <div class="workout__buttons">
+                <button> ⚙️ </button>
+                <button class="workout__close"> ❌ </button>
+              </div>
               <div class="workout__details">
                 <span class="workout__icon">${workout.type === "running" ? "🏃‍" : "🚴"}️</span>
                 <span class="workout__value">${workout.distance}</span>
@@ -179,7 +188,7 @@ class App {
             html += `
               <div class="workout__details">
                 <span class="workout__icon">⚡️</span>
-                <span class="workout__value">${workout.speed}</span>
+                <span class="workout__value">${workout.speed.toFixed(1)}</span>
                 <span class="workout__unit">km/h</span>
               </div>
               <div class="workout__details">
@@ -190,9 +199,32 @@ class App {
               `;
 
         form.insertAdjacentHTML("afterend", html);
+        const closeButton = document.querySelector(".workout__close");
+        closeButton.addEventListener("click", this._deleteWorkout.bind(this));
     }
 
     // Method 10
+    _deleteWorkout(e) {
+        // Remove workout from list
+        const workoutEl = e.target.closest(".workout");
+        containerWorkouts.removeChild(workoutEl);
+
+        // Remove workout marker on map
+        const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
+        const markerToRemove = this.#layerGroup.getLayer(workout.markerID);
+        if (markerToRemove)
+            this.#layerGroup.removeLayer(markerToRemove);
+
+        // Remove object from workout array
+        const indexToRemove = this.#workouts.findIndex(obj => obj.id === workoutEl.dataset.id);
+        if (indexToRemove !== -1)
+            this.#workouts.splice(indexToRemove, 1);
+
+        // Update localstorage
+        this._setLocalStorage();
+    }
+
+    // Method 11
     _moveToPopup(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -203,6 +235,8 @@ class App {
 
         const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
 
+        if (!workout) return;
+
         this.#map.setView(workout.coords, this.#mapZoomLevel, {
             animate: true,
             pan: {
@@ -212,15 +246,16 @@ class App {
 
         // Testing out the public interface in workout.js
         // Will give error when using it on an object created from a localstorage string
+        // This is because prototype chain is already broken when converting from string back to object
         // workout.click();
     }
 
-    // Method 11
+    // Method 12
     _setLocalStorage() {
         localStorage.setItem("workouts", JSON.stringify(this.#workouts));
     }
 
-    // Method 12
+    // Method 13
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem("workouts"));
 
@@ -233,7 +268,7 @@ class App {
         });
     }
 
-    // Method 13
+    // Method 14
     reset() {
         localStorage.removeItem("workouts");
         location.reload();

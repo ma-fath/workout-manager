@@ -1,0 +1,10 @@
+1. Edit a workout
+2. Delete a workout
+
+3. Delete all workouts
+4. Sort all workouts
+
+5. Polyline workout
+6. Better messages
+7. Geocode location
+8. Display weather

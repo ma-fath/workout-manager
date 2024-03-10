@@ -2,6 +2,7 @@ class Workout {
     date = new Date();
     // Temporary solution for creating a unique ID
     id = (Date.now() + "").slice(-10);
+    markerID = null;
     clicks = 0;
 
     constructor(coords, distance, duration) {
