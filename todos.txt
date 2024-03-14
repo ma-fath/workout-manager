@@ -7,7 +7,7 @@
     - have workout updated with new values
 
 3. Delete all workouts (DONE)
-4. Sort all workouts
+4. Sort all workouts (DONE)
 
 5. Polyline workout
 6. Better messages

@@ -2,6 +2,8 @@
 
 // APPLICATION ARCHITECTURE
 const deleteAllBtn = document.querySelector(".delete__all__btn");
+const sortDistanceBtn = document.querySelector(".sort__distance__btn");
+const sortDurationBtn = document.querySelector(".sort__duration__btn");
 const form = document.querySelector(".form");
 const formClose = document.querySelector(".form__close__btn");
 const containerWorkouts = document.querySelector(".workouts");
@@ -19,6 +21,8 @@ class App {
     #layerGroup;
     #workouts = []; // Array containing all workout objects
     #currentEventObject = null;
+    #isDistanceAscendingSort = false;
+    #isDurationAscendingSort = false;
 
     // Method 1 - Constructor
     constructor() {
@@ -26,11 +30,13 @@ class App {
         this._getLocalStorage();
 
         deleteAllBtn.addEventListener("click", this._deleteAllWorkouts.bind(this));
+        sortDistanceBtn.addEventListener("click", this._sortWorkouts.bind(this));
+        sortDurationBtn.addEventListener("click", this._sortWorkouts.bind(this));
         // An event handler function will always have the "this" keyword of the DOM element onto which it is attached.
         // So below, "this" points to the form not the app object!
         // So to fix this, must use bind method.
         form.addEventListener("submit", this._newWorkout.bind(this));
-        formClose.addEventListener("click", this._hideForm.bind(this)); // THIS SEEMS TO ALWAYS RUN BEFORE RENDERING NEW WORKOUT!!!
+        formClose.addEventListener("click", this._hideForm.bind(this));
         inputType.addEventListener("change", this._toggleElevationField.bind(this));
         containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
     }
@@ -297,6 +303,30 @@ class App {
         this._setLocalStorage();
 
         this.#currentEventObject = null;
+    }
+
+    // Method 12
+    _sortWorkouts(e) {
+        const sortType = e.target.value;
+
+        if (sortType === "distance") {
+            const sortMultiplier = this.#isDistanceAscendingSort ? 1 : -1;
+            this.#workouts.sort((a, b) => sortMultiplier * (b.distance - a.distance));
+            this.#isDistanceAscendingSort = !this.#isDistanceAscendingSort;
+        }
+
+        if (sortType === "duration") {
+            const sortMultiplier = this.#isDurationAscendingSort ? 1 : -1;
+            this.#workouts.sort((a, b) => sortMultiplier * (b.duration - a.duration));
+            this.#isDurationAscendingSort = !this.#isDurationAscendingSort;
+        }
+
+        while (containerWorkouts.lastChild) {
+            containerWorkouts.removeChild(containerWorkouts.lastChild);
+        }
+
+        this._setLocalStorage();
+        this._getLocalStorage();
     }
 
     // Method 12
