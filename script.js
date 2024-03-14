@@ -1,6 +1,7 @@
 "use strict";
 
 // APPLICATION ARCHITECTURE
+const deleteAllBtn = document.querySelector(".delete__all__btn");
 const form = document.querySelector(".form");
 const formClose = document.querySelector(".form__close__btn");
 const containerWorkouts = document.querySelector(".workouts");
@@ -24,6 +25,7 @@ class App {
         this._getPosition();
         this._getLocalStorage();
 
+        deleteAllBtn.addEventListener("click", this._deleteAllWorkouts.bind(this));
         // An event handler function will always have the "this" keyword of the DOM element onto which it is attached.
         // So below, "this" points to the form not the app object!
         // So to fix this, must use bind method.
@@ -257,7 +259,7 @@ class App {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
 
-        // Remove workout from list
+        // Remove workout from sidebar
         const workoutEl = e.target.closest(".workout");
         containerWorkouts.removeChild(workoutEl);
 
@@ -276,6 +278,24 @@ class App {
         this._setLocalStorage();
 
         // In case of an edit, reset #currentEventObject
+        this.#currentEventObject = null;
+    }
+
+    _deleteAllWorkouts(e) {
+        // Remove all workouts from the sidebar
+        while (containerWorkouts.lastChild) {
+            containerWorkouts.removeChild(containerWorkouts.lastChild);
+        }
+
+        // Remove all workout marker on map
+        this.#layerGroup.clearLayers();
+
+        // Remove object from workout array
+        this.#workouts = [];
+
+        // Update localstorage
+        this._setLocalStorage();
+
         this.#currentEventObject = null;
     }
 

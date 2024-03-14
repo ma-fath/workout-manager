@@ -42,11 +42,12 @@ a:visited {
 
 /* SIDEBAR */
 .sidebar {
-    flex-basis: 50rem;
     background-color: var(--color-dark--1);
     padding: 3rem 5rem 4rem 5rem;
     display: flex;
+    flex-basis: 50rem;
     flex-direction: column;
+    /*gap: 1rem;*/
 }
 
 .workouts {
@@ -125,14 +126,14 @@ a:visited {
     /*transform: translate(50%, -50%);*/
 }
 
-button {
+.buttons__group button {
     background-color: transparent;
     border: none;
     padding: 0;
     cursor: pointer;
 }
 
-button:hover {
+.buttons__group button:hover {
     transform: scale(1.5);
     transition: transform 0.3s ease-in-out;
 }
@@ -200,6 +201,26 @@ button:hover {
 
 .form__submit__btn {
     /*display: none;*/
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+}
+
+.options button {
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(60deg, #00f, #00e8ff) border-box;
+    background-color: inherit;
+    width: 14rem;
+    color: black;
+    padding: 10px 20px;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 1.4rem;
+    /*box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.2);*/
+    /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);*/
 }
 
 /* MAP */
