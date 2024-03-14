@@ -2,6 +2,7 @@
 
 // APPLICATION ARCHITECTURE
 const form = document.querySelector(".form");
+const formClose = document.querySelector(".form__close__btn");
 const containerWorkouts = document.querySelector(".workouts");
 const inputType = document.querySelector(".form__input--type");
 const inputDistance = document.querySelector(".form__input--distance");
@@ -16,6 +17,7 @@ class App {
     #mapEvent;
     #layerGroup;
     #workouts = []; // Array containing all workout objects
+    #currentEventObject = null;
 
     // Method 1 - Constructor
     constructor() {
@@ -26,6 +28,7 @@ class App {
         // So below, "this" points to the form not the app object!
         // So to fix this, must use bind method.
         form.addEventListener("submit", this._newWorkout.bind(this));
+        formClose.addEventListener("click", this._hideForm.bind(this)); // THIS SEEMS TO ALWAYS RUN BEFORE RENDERING NEW WORKOUT!!!
         inputType.addEventListener("change", this._toggleElevationField.bind(this));
         containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
     }
@@ -90,6 +93,9 @@ class App {
         // Empty the inputs
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = "";
 
+        // Remove glow effect from previously selected workout
+        this._removeGlowEffect();
+
         form.style.display = "none";
         form.classList.add("hidden");
         setTimeout(() => form.style.display = "grid", 1000);
@@ -148,6 +154,9 @@ class App {
 
         // Set local storage
         this._setLocalStorage();
+
+        // In case of an edit, also remove old workout
+        if (this.#currentEventObject) this._deleteWorkout(this.#currentEventObject);
     }
 
     // Method 8
@@ -171,7 +180,7 @@ class App {
         let html = `
             <li class="workout workout--${workout.type}" data-id=${workout.id}>
               <h2 class="workout__title">${workout.description}</h2>
-              <div class="workout__buttons">
+              <div class="buttons__group">
                 <button class="workout__edit"> ⚙️ </button>
                 <button class="workout__close"> ❌ </button>
               </div>
@@ -215,29 +224,32 @@ class App {
               </div>
               `;
 
-        form.insertAdjacentHTML("afterend", html);
+        containerWorkouts.insertAdjacentHTML("afterbegin", html);
 
-        const closeButton = document.querySelector(".workout__close");
-        const editButton = document.querySelector(".workout__edit");
-        closeButton.addEventListener("click", this._deleteWorkout.bind(this));
-        editButton.addEventListener("click", this._editWorkout.bind(this));
+        const workoutClose = document.querySelector(".workout__close");
+        const workoutEdit = document.querySelector(".workout__edit");
+        workoutClose.addEventListener("click", this._deleteWorkout.bind(this));
+        workoutEdit.addEventListener("click", this._editWorkout.bind(this));
     }
 
     // Method 10
     _editWorkout(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
-        
+
+        // Remove glow effect from previously selected workout
+        this._removeGlowEffect();
+
+        this.#currentEventObject = e;
         const workoutEl = e.target.closest(".workout");
         const workout = this.#workouts.find(work => work.id === workoutEl.dataset.id);
         const performance = workout?.cadence ?? workout.elevationGain;
         const mapE = {"latlng": {"lat": workout.coords[0], "lng": workout.coords[1]}};
 
+        workoutEl.classList.add("workout__glow");
+
         // Add updated workout
         this._showForm(mapE, workout.type, workout.distance, workout.duration, performance);
-
-        // Remove old workout
-        this._deleteWorkout(e);
     }
 
     // Method 11
@@ -262,9 +274,18 @@ class App {
 
         // Update localstorage
         this._setLocalStorage();
+
+        // In case of an edit, reset #currentEventObject
+        this.#currentEventObject = null;
     }
 
     // Method 12
+    _removeGlowEffect() {
+        if (this.#currentEventObject)
+            this.#currentEventObject.target.closest(".workout").classList.remove("workout__glow");
+    }
+
+    // Method 13
     _moveToPopup(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -290,12 +311,12 @@ class App {
         // workout.click();
     }
 
-    // Method 13
+    // Method 14
     _setLocalStorage() {
         localStorage.setItem("workouts", JSON.stringify(this.#workouts));
     }
 
-    // Method 14
+    // Method 15
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem("workouts"));
 
@@ -308,7 +329,7 @@ class App {
         });
     }
 
-    // Method 15
+    // Method 16
     reset() {
         localStorage.removeItem("workouts");
         location.reload();
