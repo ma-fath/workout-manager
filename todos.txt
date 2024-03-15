@@ -5,13 +5,13 @@
     - Update #workouts
     - Update localStorage
     - have workout updated with new values
-
 3. Delete all workouts (DONE)
 4. Sort all workouts (DONE)
+5. adaptive display (DONE)
 
-5. Polyline workout
-6. Better messages (?)
-7. Geocode location (?)
-8. Display weather
+6. Polyline workout
+7. Display weather
+8. Clean code (comments, readme)
 
-9. adaptive display
+9. Better messages (?)
+10. Geocode location (?)

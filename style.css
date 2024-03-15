@@ -1,6 +1,6 @@
 :root {
     --color-brand--1: #ffb545;
-    --color-brand--2: #00c46a;
+    --color-brand--2: #118751;
 
     --color-dark--1: #2d3439;
     --color-dark--2: #42484d;
@@ -130,10 +130,10 @@ a:visited {
     background-color: transparent;
     border: none;
     padding: 0;
-    cursor: pointer;
 }
 
 .buttons__group button:hover {
+    cursor: pointer;
     transform: scale(1.5);
     transition: transform 0.3s ease-in-out;
 }
@@ -200,27 +200,31 @@ a:visited {
 }
 
 .form__submit__btn {
-    /*display: none;*/
+    display: none;
 }
 
 .options {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
 }
 
 .options button {
-    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(60deg, #00f, #00e8ff) border-box;
-    background-color: inherit;
-    width: 14rem;
-    color: black;
-    padding: 10px 20px;
     border: 3px solid transparent;
     border-radius: 5px;
+    padding: 0.3rem 1.1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: 800;
+
+    background-color: dodgerblue;
+    color: inherit;
+}
+
+.options button:hover {
     cursor: pointer;
-    font-family: sans-serif;
-    font-size: 1.4rem;
-    /*box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.2);*/
-    /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);*/
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
 }
 
 /* MAP */
@@ -254,6 +258,7 @@ a:visited {
     border-left: 5px solid var(--color-brand--1);
 }
 
+/*Media queries*/
 @media screen and (max-width: 800px) {
     body {
         flex-direction: column;
