@@ -1,6 +1,6 @@
 # Workout Manager - An Interactive Fitness Tracker
 
-Get Active, Get Located! Workout Manager is a project built with JavaScript that empowers users to
+Get active, get located! Workout Manager is a project built with JavaScript that empowers users to
 manage their fitness routines with a location twist. This web application is ideal for:
 
 - Fitness enthusiasts who enjoy visualizing their workout locations.
