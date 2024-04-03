@@ -1,6 +1,6 @@
 :root {
     --color-brand--1: #ffb545;
-    --color-brand--2: #118751;
+    --color-brand--2: #00c46a;
 
     --color-dark--1: #2d3439;
     --color-dark--2: #42484d;
@@ -216,7 +216,6 @@ a:visited {
     font-family: inherit;
     font-size: 1.2rem;
     font-weight: 800;
-
     background-color: dodgerblue;
     color: inherit;
 }

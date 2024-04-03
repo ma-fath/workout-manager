@@ -9,9 +9,14 @@
 4. Sort all workouts (DONE)
 5. adaptive display (DONE)
 
-6. Polyline workout
-7. Display weather
-8. Clean code (comments, readme)
+-----------------------------------------
 
-9. Better messages (?)
-10. Geocode location (?)
+6. Clean code (comments, readme)
+7. Deploy
+
+-----------------------------------------
+
+8. Polyline workout (?)
+9. Display weather (?)
+10. Better messages (?)
+11. Geocode location (?)

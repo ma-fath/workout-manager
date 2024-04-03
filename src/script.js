@@ -41,7 +41,7 @@ class App {
         containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
     }
 
-    // Method 2
+    // Method 2 - Fetch current position of the user
     _getPosition() {
         if (navigator.geolocation)
             // Must use bind method else "this" will be set to undefined!
@@ -50,7 +50,7 @@ class App {
             });
     }
 
-    // Method 3
+    // Method 3 - Load map based on the fetched position of the user
     _loadMap(position) {
         const {latitude} = position.coords;
         const {longitude} = position.coords;
@@ -71,7 +71,7 @@ class App {
         this.#workouts.forEach(work => this._renderWorkoutMarker(work));
     }
 
-    // Method 4
+    // Method 4 - Show form to create or edit a workout
     _showForm(mapE, type = "running", distance = "", duration = "", performance = "") {
         this.#mapEvent = mapE;
         form.classList.remove("hidden");
@@ -87,16 +87,15 @@ class App {
                 inputElevation.closest(".form__row").classList.add("form__row--hidden");
                 inputCadence.value = performance;
             }
-            if (type === "cycling") { // PROBLEM IF CHANGE FROM CYCLING TO RUNNING AND VICE VERSA??
+            if (type === "cycling") {
                 inputCadence.closest(".form__row").classList.add("form__row--hidden");
                 inputElevation.closest(".form__row").classList.remove("form__row--hidden");
                 inputElevation.value = performance;
             }
-            // const {lat, lng} = this.#mapEvent.latlng;
         }
     }
 
-    // Method 5
+    // Method 5 - Hide form used to create or edit a workout
     _hideForm() {
         // Empty the inputs
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = "";
@@ -109,13 +108,13 @@ class App {
         setTimeout(() => form.style.display = "grid", 1000);
     }
 
-    // Method 6
+    // Method 6 - Toggle between elevation and cadence input row
     _toggleElevationField() {
         inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
         inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
     }
 
-    // Method 7
+    // Method 7 - Create workout based on the input data from the previous form
     _newWorkout(e) {
         const validInputs = (...inputs) => inputs.every(inp => Number.isFinite(inp));
         const allPositive = (...inputs) => inputs.every(inp => inp > 0);
@@ -133,7 +132,6 @@ class App {
         if (type === "running") {
             const cadence = +inputCadence.value;
             // Check if data is valid
-            // if (!Number.isFinite(distance) || !Number.isFinite(duration) || !Number.isFinite(cadence))
             if (!validInputs(distance, duration, cadence) || !allPositive(distance, duration, cadence))
                 return alert("Inputs have to be positive numbers!");
             workout = new Running([lat, lng], distance, duration, cadence);
@@ -167,10 +165,10 @@ class App {
         if (this.#currentEventObject) this._deleteWorkout(this.#currentEventObject);
     }
 
-    // Method 8
+    // Method 8 - Render a map marker to represent a workout
     _renderWorkoutMarker(workout) {
         const markerObject = L.marker(workout.coords)
-            .addTo(this.#layerGroup) // removed previous .addTo(this.#map) because unnecessary
+            .addTo(this.#layerGroup)
             .bindPopup(L.popup({
                 maxWidth: 250,
                 minWidth: 100,
@@ -183,7 +181,7 @@ class App {
         workout.markerID = markerObject._leaflet_id;
     }
 
-    // Method 9
+    // Method 9 - Render a list item in the sidebar to represent a workout
     _renderWorkout(workout) {
         let html = `
             <li class="workout workout--${workout.type}" data-id=${workout.id}>
@@ -240,7 +238,7 @@ class App {
         workoutEdit.addEventListener("click", this._editWorkout.bind(this));
     }
 
-    // Method 10
+    // Method 10 - Enable workout edit functionality when clicking on the edit button
     _editWorkout(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -260,7 +258,7 @@ class App {
         this._showForm(mapE, workout.type, workout.distance, workout.duration, performance);
     }
 
-    // Method 11
+    // Method 11 - Enable workout removal when clicking on the close button
     _deleteWorkout(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -287,6 +285,7 @@ class App {
         this.#currentEventObject = null;
     }
 
+    // Method 12 - Delete all created workouts
     _deleteAllWorkouts(e) {
         // Remove all workouts from the sidebar
         while (containerWorkouts.lastChild) {
@@ -305,7 +304,7 @@ class App {
         this.#currentEventObject = null;
     }
 
-    // Method 12
+    // Method 13 - Enable workout sorting functionality (either by distance or duration)
     _sortWorkouts(e) {
         const sortType = e.target.value;
 
@@ -329,13 +328,13 @@ class App {
         this._getLocalStorage();
     }
 
-    // Method 12
+    // Method 14 - Control glow effect around a workout list item in the sidebar when editing them
     _removeGlowEffect() {
         if (this.#currentEventObject)
             this.#currentEventObject.target.closest(".workout").classList.remove("workout__glow");
     }
 
-    // Method 13
+    // Method 15 - Enable moving to a workout map marker when clicking on its corresponding list item in the sidebar
     _moveToPopup(e) {
         // To prevent error when clicking on workout after a refresh
         if (!this.#map) return;
@@ -361,12 +360,12 @@ class App {
         // workout.click();
     }
 
-    // Method 14
+    // Method 16 - Store data in the localStorage to persist it across refreshes
     _setLocalStorage() {
         localStorage.setItem("workouts", JSON.stringify(this.#workouts));
     }
 
-    // Method 15
+    // Method 17 - Retrieve data from the localStorage
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem("workouts"));
 
@@ -379,7 +378,7 @@ class App {
         });
     }
 
-    // Method 16
+    // Method 18 - Reset app by emptying the localStorage
     reset() {
         localStorage.removeItem("workouts");
         location.reload();
@@ -387,7 +386,3 @@ class App {
 }
 
 const app = new App();
-
-// const run1 = new Running([39, -12], 5.2, 24, 178);
-// const cyc1 = new Cycling([39, -12], 27, 95, 523);
-// console.log(run1, cyc1);
