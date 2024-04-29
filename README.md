@@ -28,12 +28,13 @@ Workout Manager provides an interactive interface for:
 
 ## Screenshots
 
+![Image of the main window](/public/images/README_main_window.png)  
 ![Image of the workout edit mode](/public/images/README_workout_edit.png)  
 ![Image of the app in mobile form](/public/images/README_responsive_design.png)
 
 ## Link
 
-Live Site URL: [https://ma-fath.github.io/workout-manager/](https://ma-fath.github.io/workout-manager/)
+Live Site URL: [https://ma-fath-workout-manager.vercel.app/](https://ma-fath-workout-manager.vercel.app/)
 
 ## Built with
 
@@ -42,6 +43,7 @@ Live Site URL: [https://ma-fath.github.io/workout-manager/](https://ma-fath.gith
 - JavaScript
 - [Leaflet](https://leafletjs.com/) - JavaScript mapping library
 - [Parcel](https://parceljs.org/) - Web application bundler
+- [Vercel](https://vercel.com/) - Deployment service
 
 ## Author
 
