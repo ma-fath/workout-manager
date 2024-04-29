@@ -1,98 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!--    PART 1-->
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta
-            name="description"
-            content="Workout Manager is an innovative web application designed to help you manage your workouts like never before!"
+      name="description"
+      content="Workout Manager is an innovative web application designed to help you manage your workouts like never before!"
     />
-    <!--    PART 2-->
+
+    <title>Workout Tracking Platform | Workout Manager</title>
+
+    <!-- Link to index.css must be first to not replace leaflet map styling -->
+    <link rel="stylesheet" href="src/index.css" />
+    <link rel="icon" href="public/favicon.ico" />
+    <link rel="apple-touch-icon" href="public/images/apple-touch-icon.png" />
+    <link rel="manifest" href="public/manifest.json" />
     <link
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
-            rel="stylesheet"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
     />
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <!--    PART 3-->
-    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script defer src="src/workout.js"></script>
-    <script defer src="src/running.js"></script>
-    <script defer src="src/cycling.js"></script>
-    <script defer src="src/script.js"></script>
-    <!--    PART 4-->
-    <title>Workout Manager</title>
-</head>
-<body>
-<div class="sidebar">
-    <div class="options">
-        <button class="sort__distance__btn" value="distance">SORT (DISTANCE)</button>
-        <button class="sort__duration__btn" value="duration">SORT (DURATION)</button>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script defer type="module" src="src/index.js"></script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="header">
+        <ion-icon class="brand-logo" name="map"></ion-icon>
+        <p>Workout Manager</p>
+      </div>
+      <div class="options">
+        <button class="sort__distance__btn" value="distance">
+          SORT (DISTANCE)
+        </button>
+        <button class="sort__duration__btn" value="duration">
+          SORT (DURATION)
+        </button>
         <button class="delete__all__btn">DELETE ALL</button>
-    </div>
-    <form class="form hidden">
+      </div>
+      <form class="form hidden">
         <div class="buttons__group">
-            <!--        Specifying the button type is necessary for proper submitting-->
-            <button class="form__close__btn" type="button">❌</button>
-            <button class="form__submit__btn">✅</button>
+          <!-- Specifying the button type is necessary for proper submitting -->
+          <button class="form__close__btn" type="button">❌</button>
+          <button class="form__submit__btn">✅</button>
         </div>
         <div class="form__rows__group">
-            <!--            1st row-->
-            <div class="form__row">
-                <label class="form__label">Type</label>
-                <label>
-                    <select class="form__input form__input--type">
-                        <option value="running">Running</option>
-                        <option value="cycling">Cycling</option>
-                    </select>
-                </label>
-            </div>
-            <!--            2nd row-->
-            <div class="form__row">
-                <label class="form__label">Distance</label>
-                <label>
-                    <input class="form__input form__input--distance" placeholder="km"/>
-                </label>
-            </div>
-            <!--            3rd row-->
-            <div class="form__row">
-                <label class="form__label">Duration</label>
-                <label>
-                    <input
-                            class="form__input form__input--duration"
-                            placeholder="min"
-                    />
-                </label>
-            </div>
-            <!--            4th row-->
-            <div class="form__row">
-                <label class="form__label">Cadence</label>
-                <label>
-                    <input
-                            class="form__input form__input--cadence"
-                            placeholder="step/min"
-                    />
-                </label>
-            </div>
-            <!--            4th row-->
-            <div class="form__row form__row--hidden">
-                <label class="form__label">Elev Gain</label>
-                <label>
-                    <input
-                            class="form__input form__input--elevation"
-                            placeholder="meters"
-                    />
-                </label>
-            </div>
+          <!-- 1st row -->
+          <div class="form__row">
+            <label class="form__label">Type</label>
+            <select class="form__input form__input--type">
+              <option value="running">Running</option>
+              <option value="cycling">Cycling</option>
+            </select>
+          </div>
+          <!-- 2nd row -->
+          <div class="form__row">
+            <label class="form__label">Distance</label>
+            <input class="form__input form__input--distance" placeholder="km" />
+          </div>
+          <!-- 3rd row -->
+          <div class="form__row">
+            <label class="form__label">Duration</label>
+            <input
+              class="form__input form__input--duration"
+              placeholder="min"
+            />
+          </div>
+          <!-- 4th row -->
+          <div class="form__row">
+            <label class="form__label">Cadence</label>
+            <input
+              class="form__input form__input--cadence"
+              placeholder="step/min"
+            />
+          </div>
+          <!-- 4th row (hidden) -->
+          <div class="form__row form__row--hidden">
+            <label class="form__label">Elev Gain</label>
+            <input
+              class="form__input form__input--elevation"
+              placeholder="meters"
+            />
+          </div>
         </div>
-    </form>
-    <ul class="workouts"></ul>
-</div>
+      </form>
+      <ul class="workouts"></ul>
+      <div class="footer">
+        Made with 💖 by
+        <a class="author" href="https://github.com/ma-fath">Maximilien Fathi</a>
+      </div>
+    </div>
 
-<div id="map"></div>
-</body>
+    <div id="map"></div>
+  </body>
 </html>

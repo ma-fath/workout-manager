@@ -1,16 +1,19 @@
+import Workout from "./workout.js";
+
 class Running extends Workout {
-    type = "running";
+  type = "running";
 
-    constructor(coords, distance, duration, cadence) {
-        super(coords, distance, duration);
-        this.cadence = cadence;
-        this.calcPace();
-        this._setDescription();
-    }
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration);
+    this.cadence = cadence;
+    this.calcPace();
+    this._setDescription();
+  }
 
-    calcPace() {
-        // min/km
-        this.pace = this.duration / this.distance;
-        return this.pace;
-    }
+  calcPace() {
+    this.pace = this.duration / this.distance; // min/km
+    return this.pace;
+  }
 }
+
+export default Running;
