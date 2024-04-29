@@ -34,8 +34,8 @@ Workout Manager provides an interactive interface for:
 
 ### Screenshots
 
-![Image of the main window](/public/images/README_main_window.png)  
-![Image of the workout edit mode](/public/images/README_workout_edit.png)  
+![Image of the main window](/public/images/README_main_window.png)
+![Image of the workout edit mode](/public/images/README_workout_edit.png)
 ![Image of the app in mobile form](/public/images/README_responsive_design.png)
 
 ### Link
