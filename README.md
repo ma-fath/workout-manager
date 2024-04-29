@@ -68,7 +68,7 @@ Even though I have accomplished many of my initial objectives for this
 project, there are still some new features I wish to include such as:
 
 - The use of a database to store data rather than rely on the localStorage.
-- An authentication mechanism to allow user account.
+- An authentication mechanism to allow user accounts.
 - The display of further helpful data (e.g. the weather at a specific location).
 - The creation of lines on the map to show the actual route used for a workout.
 
