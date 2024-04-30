@@ -5,6 +5,7 @@
 
   --color-brand--1: #ffb545;
   --color-brand--2: #00c46a;
+  --color-brand--2--dark: #00894a;
 
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
@@ -40,6 +41,13 @@ body {
 a:link,
 a:visited {
   color: var(--color-brand--2);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:hover,
+a:active {
+  color: var(--color-brand--2--dark);
 }
 
 /* ########################################################################## */
@@ -252,10 +260,6 @@ a:visited {
 .footer {
   font-size: 1.4rem;
   align-self: center;
-}
-
-.author {
-  text-decoration: none;
 }
 
 /* ########################################################################## */
