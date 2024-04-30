@@ -1,12 +1,13 @@
 {
   "name": "workout-manager",
   "version": "1.0.0",
+  "author": "Maximilien Fathi",
+  "license": "ISC",
+  "private": true,
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
-  "author": "Maximilien Fathi",
-  "license": "ISC",
   "dependencies": {
     "leaflet": "^1.9.4"
   },
