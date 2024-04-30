@@ -72,12 +72,13 @@ project, there are still some new features I wish to include such as:
 - The display of further helpful data (e.g. the weather at a specific location).
 - The creation of lines on the map to show the actual route used for a workout.
 
-### Useful resources
+### Useful additional resources
 
 - [MDN Web Docs](https://developer.mozilla.org/) - This enhanced my knowledge of certain HTML, CSS, and JavaScript concepts needed to complete the project.
 - [Stack Overflow](http://stackoverflow.com/) - This proved insightful
   when I was stuck on specific coding issues.
-- [Leaflet](https://leafletjs.com/reference.html) - This provided me with the documentation necessary to integrate Leaflet's mapping technology into my project.
+- [Tint & Shade Generator](https://maketintsandshades.com/) - This was a
+  great tool for generating lighter and darker versions of specific colors.
 - [Favicon.io](https://favicon.io/) - This allowed me to quickly generate
   necessary files for the favicon and its different formats.
 - [Parcel REPL](https://repl.parceljs.org/) - This helped me further understand how bundlers like Parcel operate.
