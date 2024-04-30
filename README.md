@@ -23,14 +23,15 @@ manage their fitness routines with a location twist. This web application is ide
 
 ### The challenge
 
-Workout Manager provides an interactive interface for:
+Workout Manager should aim to meet the following objectives:
 
-- **Mapping Workouts:** Leverage geolocation technology to pinpoint workout location directly on a map with a
+- **Workout Mapping:** Leverage geolocation technology to pinpoint workout location directly on a map with a
   single click.
-- **Creating Detailed Logs:** Capture workout details effortlessly by filling out forms and adding specifics like
+- **Detailed Logs Creation:** Capture workout details effortlessly by filling out forms and adding specifics like
   activity type, distance, and duration.
 - **Seamless Editing:** Easily modify existing workout entries to ensure fitness records stay accurate and
   up-to-date.
+- **Responsive Design:** Provide an optimal user experience across all devices to ensure seamless workout accessibility regardless of the screen size.
 
 ### Screenshots
 
@@ -40,7 +41,7 @@ Workout Manager provides an interactive interface for:
 
 ### Link
 
-Live Site URL: [https://ma-fath-workout-manager.vercel.app/](https://ma-fath-workout-manager.vercel.app/)
+Live Site URL: [https://ma-fath.github.io/workout-manager/](https://ma-fath.github.io/workout-manager/)
 
 ## My process
 
@@ -51,7 +52,6 @@ Live Site URL: [https://ma-fath-workout-manager.vercel.app/](https://ma-fath-wor
 - JavaScript
 - [Leaflet](https://leafletjs.com/) - JavaScript mapping library
 - [Parcel](https://parceljs.org/) - Web application bundler
-- [Vercel](https://vercel.com/) - Deployment service
 
 ### What I learned
 
@@ -60,7 +60,7 @@ While working through this project, the major learnings involved:
 - The integration of a geolocation API to create location-based features.
 - The use of a mapping API to create interactive map experiences.
 - The creation of ES6 modules and need for bundlers such as Parcel.
-- The use of cloud platforms such as Vercel to quickly deploy web applications.
+- The application of responsive design to ensure proper usability on various screen sizes.
 
 ### Continued development
 
@@ -77,7 +77,7 @@ project, there are still some new features I wish to include such as:
 - [MDN Web Docs](https://developer.mozilla.org/) - This enhanced my knowledge of certain HTML, CSS, and JavaScript concepts needed to complete the project.
 - [Stack Overflow](http://stackoverflow.com/) - This proved insightful
   when I was stuck on specific coding issues.
-- [Leaflet](https://leafletjs.com/reference.html) - This provided me with me the documentation necessary to integrate Leaflet's mapping technology into my project.
+- [Leaflet](https://leafletjs.com/reference.html) - This provided me with the documentation necessary to integrate Leaflet's mapping technology into my project.
 - [Favicon.io](https://favicon.io/) - This allowed me to quickly generate
   necessary files for the favicon and its different formats.
 - [Parcel REPL](https://repl.parceljs.org/) - This helped me further understand how bundlers like Parcel operate.
