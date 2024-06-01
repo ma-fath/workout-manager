@@ -3,7 +3,7 @@
   "name": "Workout Manager",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "images/favicon.ico",
       "type": "image/x-icon",
       "sizes": "64x64 32x32 24x24 16x16"
     },
