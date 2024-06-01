@@ -13,7 +13,7 @@ manage your fitness routines with a location twist. Track your progress, visuali
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
+  - [Useful additional resources](#useful-additional-resources)
 - [Author](#author)
 
 ## Overview
